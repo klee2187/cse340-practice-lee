@@ -1,0 +1,10 @@
+{
+    "name": "cse340-practice-lee",
+    "dependencies": {},
+    "devDependencies": {},
+    "type": "module",
+    "scripts": {
+        "dev": "nodemon --env-file=.env server.js",
+        "start": "node server.js"
+    }
+}
