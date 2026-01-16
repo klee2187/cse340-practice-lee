@@ -1,0 +1,61 @@
+html, body {
+    background-color: rgb(229, 245, 251);
+    font-family: Arial, sans-serif;
+    margin: 1em;
+    padding: 20px;
+    line-height: 1.5em;
+    color: rgb(11, 0, 37);
+}
+
+body {
+    nav {
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            display: inline;
+            margin-right: 15px;
+        }
+        a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            
+            &:hover {
+                color: #0066cc;
+            }
+        }
+    }
+
+    h2 {
+        font-size: 1.25em;
+    }
+    
+    .background-section {
+        
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 85%;
+            border-radius: 100%;
+            box-shadow: .2em .2em 1.2em rgba(11, 0, 37, 0.819);
+            margin-top: 2em;
+            margin-bottom: 2em;
+        }
+
+    }
+        
+
+
+
+    .hobbies-section {
+        li {
+            margin-left: 2.5em;
+            list-style: circle;
+        }
+    }
+
+
+}
