@@ -1,10 +1,16 @@
 {
     "name": "cse340-practice-lee",
-    "dependencies": {},
-    "devDependencies": {},
+    "dependencies": {
+        "ejs": "^4.0.1",
+        "express": "^5.2.1"
+    },
     "type": "module",
     "scripts": {
         "dev": "nodemon --env-file=.env server.js",
         "start": "node server.js"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.11",
+        "ws": "^8.19.0"
     }
 }
