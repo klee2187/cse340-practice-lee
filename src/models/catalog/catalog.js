@@ -86,9 +86,11 @@ const courses = {
 export const getAllCourses = () => {
     return courses;
 };
+
 export const getCourseById = (courseId) => {
     return courses[courseId] || null;
 };
+
 export const getSortedSections = (sections, sortBy) => {
     const sortedSections = [...sections];
     switch (sortBy) {
@@ -101,6 +103,7 @@ export const getSortedSections = (sections, sortBy) => {
             return sortedSections;
     }
 };
+
 export const getCoursesByDepartment = () => {
     const departments = {};
     Object.values(courses).forEach(course => {
