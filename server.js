@@ -31,16 +31,11 @@ app.set('views', path.join(__dirname, 'src/views'));
  */
 app.use(addLocalVariables);
 
-/**
- * Routes
- */
 app.use('/', routes);
 
 /**
  * Error Handling
  */
-
-// 404 handler
 app.use((req, res, next) => {
     const err = new Error('Page Not Found');
     err.status = 404;
