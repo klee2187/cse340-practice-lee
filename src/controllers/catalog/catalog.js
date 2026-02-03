@@ -1,8 +1,34 @@
 import { getAllCourses, getCourseById, getSortedSections, getCoursesByDepartment } from '../../models/catalog/catalog.js';
 
-export const catalogPage = (req, res) => {
-    const courses = getAllCourses();
-    res.render('catalog', { title: 'Course Catalog', courses: courses });
+export const catalogPage = (req, res, next) => {
+    const { sort, credits, professor } = req.query;
+
+    let courses = getAllCourses();
+    let courseList = Object.values(courses);
+
+    if (credits) {
+        courseList = courseList.filter(c => c.credits === Number(credits));
+    }
+
+    if (professor) {
+        courseList = courseList.filter(c => 
+            c.sections.some(s => s.professor.toLowerCase().includes(professor.toLowerCase()))
+        );
+
+    }
+
+    if (sort === 'credits') {
+        courseList.sort((a, b) => a.credits - b.credits);
+    } else if (sort === 'title') {
+        courseList.sort((a, b) => a.title.localeCompare(b.title));
+    }
+
+    res.render ('catalog', {
+        title: 'Course Catalog',
+        courses: courseList,
+        filters: { credits, professor },
+        currentSort: sort
+    });
 };
 
 export const courseDetailPage = (req, res, next) => {

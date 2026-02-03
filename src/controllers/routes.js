@@ -13,9 +13,12 @@ router.get('/', homePage);
 router.get('/about', aboutPage);
 
 // Course catalog routes
-router.get('/catalog', catalogPage, departmentsPage);
+router.get('/catalog', catalogPage);
 router.get('/catalog/random', randomCoursePage);
 router.get('/catalog/:courseId', courseDetailPage);
+
+// departments route
+router.get('/departments', departmentsPage);
 
 // Demo page with special middleware
 router.get('/demo', countDemoReq, addDemoHeaders, demoPage);

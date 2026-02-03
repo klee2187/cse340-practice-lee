@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 // Import MVC components
 import routes from './src/controllers/routes.js';
 import { addLocalVariables } from './src/middleware/global.js';
+import { errorNotFound, globalErrorHandler } from './src/controllers/errors/errors.js';
 
 /**
  * Server configuration
@@ -33,51 +34,11 @@ app.use(addLocalVariables);
 
 app.use('/', routes);
 
-/**
- * Error Handling
- */
-app.use((req, res, next) => {
-    const err = new Error('Page Not Found');
-    err.status = 404;
-    next(err);
-});
+// 404 handler
+app.use(errorNotFound);
 
-// Global error handler
-app.use((err, req, res, next) => {
-
-    if (res.headersSent || res.finished) {
-        return next(err);
-    }
-
-    const status = err.status || 500;
-
-    console.error(`
-        [${new Date().toISOString()}] ERROR:
-        Status: ${status}
-        Message: ${err.message}
-        URL: ${req.originalUrl}
-        Method: ${req.method}
-        User Agent: ${req.headers['user-agent']}
-        Stack: ${err.stack}
-            `);
-
-    const template = status === 404 ? '404' : '500';
-
-    const context = {
-        title: status === 404 ? 'Page Not Found' : 'Server Error',
-        error: NODE_ENV === 'production' ? 'An error occurred' : err.message,
-        stack: NODE_ENV === 'production' ? null : err.stack,
-        NODE_ENV 
-    };
-
-    try {
-        res.status(status).render(`errors/${template}`, context);
-    } catch (renderErr) {
-        if (!res.headersSent) {
-            res.status(status).send(`<h1>Error ${status}</h1><p>An error occurred.</p>`);
-        }
-    }
-});
+// Global handler
+app.use(globalErrorHandler);
 
 /**
  * Start WebSocket Server in Development Mode; used for live reloading

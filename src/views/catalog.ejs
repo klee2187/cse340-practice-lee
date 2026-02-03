@@ -3,6 +3,24 @@
 <main>
     <h1>Course Catalog</h1>
     <p>Browse our available courses and click on any course to see detailed information including available sections and instructors.</p>
+    
+    <form method="GET" class="filters">
+    <label>
+        Credits:
+        <select name="credits">
+            <option value="">All</option>
+            <option value="3">3 credits</option>
+            <option value="4">4 credits</option>
+        </select>
+    </label>
+
+    <label>
+        Professor:
+        <input type="text" name="professor" placeholder="Smith">
+    </label>
+
+    <button type="submit">Apply Filters</button>
+</form>
 
     <div class="course-list">
         <% Object.values(courses).forEach(course => { %>
