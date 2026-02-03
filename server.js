@@ -50,6 +50,17 @@ app.use((err, req, res, next) => {
     }
 
     const status = err.status || 500;
+
+    console.error(`
+        [${new Date().toISOString()}] ERROR:
+        Status: ${status}
+        Message: ${err.message}
+        URL: ${req.originalUrl}
+        Method: ${req.method}
+        User Agent: ${req.headers['user-agent']}
+        Stack: ${err.stack}
+            `);
+
     const template = status === 404 ? '404' : '500';
 
     const context = {

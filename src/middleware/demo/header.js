@@ -6,3 +6,11 @@ export const addDemoHeaders = (req, res, next) => {
     res.setHeader('X-Middleware-Demo', 'This is a middleware demo header');
     next();
 };
+
+let demoPageReqCount = 0;
+
+export const countDemoReq = (req, res, next) => {
+    demoPageReqCount++;
+    res.locals.demoReqCount = demoPageReqCount;
+    next();
+}

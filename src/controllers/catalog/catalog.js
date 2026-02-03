@@ -6,7 +6,16 @@ export const catalogPage = (req, res) => {
 };
 
 export const courseDetailPage = (req, res, next) => {
-    const courseId = req.params.courseId;
+    const courseId = req.params.courseId.toUpperCase();
+
+    const isValid = /^[A-Z]+[0-9]+$/.test(courseId);
+
+    if (!isValid) {
+        const err = new Error(`Invalid course ID: ${courseId}`);
+        err.status = 400;
+        return next(err);
+    }
+
     const course = getCourseById(courseId);
 
     if (!course) {
@@ -24,3 +33,10 @@ export const courseDetailPage = (req, res, next) => {
         currentSort: sortBy
     });
 };
+
+export const randomCoursePage = (req, res, next) => {
+    const courses = getAllCourses();
+    const courseIds = Object.keys(courses);
+    const randomId = courseIds[Math.floor(Math.random() * courseIds.length)];
+    res.redirect(`/catalog/${randomId}`);
+}
