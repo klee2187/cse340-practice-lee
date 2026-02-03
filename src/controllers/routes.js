@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { addDemoHeaders, countDemoReq } from '../middleware/demo/header.js';
-import { catalogPage, courseDetailPage, randomCoursePage } from './catalog/catalog.js';
+import { catalogPage, courseDetailPage, randomCoursePage, departmentsPage } from './catalog/catalog.js';
 import { homePage, aboutPage, demoPage, testErrorPage } from './index.js';
 import { facultyListPage, facultyDetailPage } from './faculty/faculty.js';
-import { departmentsPage } from './catalog/departments.js';
+
 
 // Create a new router instance
 const router = Router();
@@ -13,8 +13,7 @@ router.get('/', homePage);
 router.get('/about', aboutPage);
 
 // Course catalog routes
-router.get('/catalog', catalogPage);
-router.get('/departments', departmentsPage) // Departments route
+router.get('/catalog', catalogPage, departmentsPage);
 router.get('/catalog/random', randomCoursePage);
 router.get('/catalog/:courseId', courseDetailPage);
 

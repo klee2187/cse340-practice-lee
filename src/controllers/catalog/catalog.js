@@ -1,4 +1,4 @@
-import { getAllCourses, getCourseById, getSortedSections } from '../../models/catalog/catalog.js';
+import { getAllCourses, getCourseById, getSortedSections, getCoursesByDepartment } from '../../models/catalog/catalog.js';
 
 export const catalogPage = (req, res) => {
     const courses = getAllCourses();
@@ -39,4 +39,13 @@ export const randomCoursePage = (req, res, next) => {
     const courseIds = Object.keys(courses);
     const randomId = courseIds[Math.floor(Math.random() * courseIds.length)];
     res.redirect(`/catalog/${randomId}`);
-}
+};
+
+export const departmentsPage = (req, res) => {
+    const departments = getCoursesByDepartment();
+
+    res.render('departments', {
+        title: 'Departments',
+        departments
+    });
+};
