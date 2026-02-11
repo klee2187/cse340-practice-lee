@@ -15,10 +15,10 @@ router.get('/about', aboutPage);
 // Course catalog routes
 router.get('/catalog', catalogPage);
 router.get('/catalog/random', randomCoursePage);
-router.get('/catalog/:courseId', courseDetailPage);
+router.get('/catalog/:slug', courseDetailPage);
 
 // departments route
-router.get('/departments', departmentsPage);
+//router.get('/departments', departmentsPage);
 
 // Demo page with special middleware
 router.get('/demo', countDemoReq, addDemoHeaders, demoPage);
@@ -29,7 +29,7 @@ router.get('/test-error', testErrorPage);
 
 // Faculty List route
 router.get('/faculty', facultyListPage);
-router.get('/faculty/:facultyId', facultyDetailPage);
+router.get('/faculty/:facultySlug', facultyDetailPage);
 
 router.get('/error-sync', (req, res) => { throw new Error('Synchronous error: something exploded!'); });
 

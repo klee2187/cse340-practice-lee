@@ -5,7 +5,7 @@
     
     <div class="sort-options">
         <span>Sort by: </span>
-        <a href="/faculty?sort=name" class="<%= currentSort === 'name' ? 'active' : '' %>">Name</a>
+        <a href="/faculty?sort=name" class="<%= currentSort === 'lastName' ? 'active' : '' %>">Name</a>
         <a href="/faculty?sort=department" class="<%= currentSort === 'department' ? 'active' : '' %>">Department</a>
         <a href="/faculty?sort=title" class="<%= currentSort === 'title' ? 'active' : '' %>">Title</a>
     </div>
@@ -13,7 +13,7 @@
     <div class="faculty-list">
         <% faculty.forEach(faculty => { %>
             <div class="faculty-card">
-                <h3><a href="/faculty/<%= faculty.id %>"><%= faculty.name %></a></h3>
+                <h3><a href="/faculty/<%= faculty.slug %>"><%= faculty.name %></a></h3>
                 <p class="faculty-title"><%= faculty.title %></p>
                 <p class="faculty-department"><%= faculty.department %></p>
             </div>
