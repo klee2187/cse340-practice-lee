@@ -25,6 +25,10 @@ const caCert = fs.readFileSync(path.join(__dirname, '../../bin', 'byuicse-psql-c
  */
 const useSSL = process.env.USE_SSL === 'true';
 
+if (!process.env.DB_URL) {
+    throw new Error("DB_URL is not defined in environment variables");
+}
+
 const pool = new Pool({
     connectionString: process.env.DB_URL,
     ssl: useSSL

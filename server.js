@@ -1,11 +1,8 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
-import express from 'express';
 import db from './src/models/db.js';
+import express from 'express';
+
 import path from 'path';
 import { fileURLToPath } from 'url';
-
 // Import MVC components
 import routes from './src/controllers/routes.js';
 import { addLocalVariables } from './src/middleware/global.js';

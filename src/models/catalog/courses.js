@@ -125,6 +125,6 @@ export const getCoursesByDepartment = async (departmentId, sortBy = 'course_code
  * Wrapper functions for backward compatibility and cleaner API.
  * Arrow functions work great for simple wrappers like this.
  */
-const getCourseById = (courseId) => getCourse(courseId, 'id');
-const getCourseBySlug = (courseSlug) => getCourse(courseSlug, 'slug');
+export const getCourseById = (courseId) => getCourse(courseId, 'id');
+export const getCourseBySlug = (courseSlug) => getCourse(courseSlug, 'slug');
 

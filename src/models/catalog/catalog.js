@@ -9,7 +9,7 @@ import db from '../db.js';
  * @param {string} sortBy - Sort option: 'time', 'room', or 'professor' (default: 'time')
  * @returns {Promise<Array>} Array of section objects with course, faculty, and department info
  */
-const getSectionsByCourse = async (identifier, identifierType = 'slug', sortBy = 'time') => {
+export const getSectionsByCourse = async (identifier, identifierType = 'slug', sortBy = 'time') => {
     // Build WHERE clause dynamically based on whether we're searching by ID or slug
     // Using $1 prevents SQL injection - never concatenate user input into SQL!
     const whereClause = identifierType === 'id' ? 'c.id = $1' : 'c.slug = $1';
@@ -72,7 +72,7 @@ const getSectionsByCourse = async (identifier, identifierType = 'slug', sortBy =
  * @param {string} sortBy - Sort option: 'time', 'room', or 'course' (default: 'time')
  * @returns {Promise<Array>} Array of section objects with course, faculty, and department info
  */
-const getCoursesByFaculty = async (identifier, identifierType = 'slug', sortBy = 'time') => {
+export const getCoursesByFaculty = async (identifier, identifierType = 'slug', sortBy = 'time') => {
     // Search by faculty ID or faculty slug
     const whereClause = identifierType === 'id' ? 'f.id = $1' : 'f.slug = $1';
     
@@ -113,11 +113,8 @@ const getCoursesByFaculty = async (identifier, identifierType = 'slug', sortBy =
     }));
 };
 
-import db from '../db.js';
-
-
 // Gets all courses grouped by department.
-const getCoursesByDepartment = async () => {
+export const getCoursesByDepartment = async () => {
     const query = `
         SELECT d.name AS department_name,
                d.code AS department_code,
@@ -163,24 +160,17 @@ const getCoursesByDepartment = async () => {
  * These let us keep the same API while using consolidated core functions internally.
  * Example: getSectionsByCourseId(5) calls getSectionsByCourse(5, 'id')
  */
-const getSectionsByCourseId = (courseId, sortBy = 'time') => 
+export const getSectionsByCourseId = (courseId, sortBy = 'time') => 
     getSectionsByCourse(courseId, 'id', sortBy);
 
-const getSectionsByCourseSlug = (courseSlug, sortBy = 'time') => 
+export const getSectionsByCourseSlug = (courseSlug, sortBy = 'time') => 
     getSectionsByCourse(courseSlug, 'slug', sortBy);
 
-const getCoursesByFacultyId = (facultyId, sortBy = 'time') => 
+export const getCoursesByFacultyId = (facultyId, sortBy = 'time') => 
     getCoursesByFaculty(facultyId, 'id', sortBy);
 
-const getCoursesByFacultySlug = (facultySlug, sortBy = 'time') => 
+export const getCoursesByFacultySlug = (facultySlug, sortBy = 'time') => 
     getCoursesByFaculty(facultySlug, 'slug', sortBy);
-
-export { 
-    getSectionsByCourseId,
-    getSectionsByCourseSlug,
-    getCoursesByFacultyId,
-    getCoursesByFacultySlug
-};
 
 
 // Enhanced course data object
