@@ -18,7 +18,7 @@ router.get('/catalog/random', randomCoursePage);
 router.get('/catalog/:slug', courseDetailPage);
 
 // departments route
-//router.get('/departments', departmentsPage);
+router.get('/departments', departmentsPage);
 
 // Demo page with special middleware
 router.get('/demo', countDemoReq, addDemoHeaders, demoPage);

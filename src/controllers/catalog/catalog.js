@@ -1,6 +1,7 @@
 // Update these imports:
 import { getAllCourses, getCourseBySlug } from '../../models/catalog/courses.js';
 import { getSectionsByCourseSlug, getCoursesByDepartment } from '../../models/catalog/catalog.js';
+import pool from "../../models/db.js";
 
 // Route handler for the course catalog list page
 export const catalogPage = async (req, res) => {
@@ -61,16 +62,19 @@ export const randomCoursePage = async (req, res, next) => {
     res.redirect(`/catalog/${randomCourse.slug}`);
 };
 
-export const departmentsPage = async (req, res) => {
-console.log('[departmentsPage router working');
+export const departmentsPage = async (req, res, next) => {
+  try {
+    console.log("[departmentsPage router working]");
 
-    
+    // Call your model function instead of using pool directly
     const departments = await getCoursesByDepartment();
-    console.log(" [departmentsPage] Departments found:", Object.keys(departments));
-    res.render('departments', {
-        title: 'Departments',
-        departments
-    });
+    console.log("[departmentsPage] Departments found:", departments.length);
+
+    res.render("departments", { departments });
+  } catch (err) {
+    console.error("[departmentsPage] Error:", err.message);
+    next(err);
+  }
 };
 
 

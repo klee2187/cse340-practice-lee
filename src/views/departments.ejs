@@ -3,21 +3,19 @@
 <main>
     <h1>Departments</h1>
 
-    <% for (const dept in departments) { %>
-        <section class="department-group">
-            <h2><%= dept %></h2>
+<% departments.forEach(dept => { %>
+  <h2><%= dept.department %> (<%= dept.departmentCode %>)</h2>
+  <ul>
+    <% dept.courses.forEach(course => { %>
+      <li>
+        <a href="/catalog/<%= course.slug %>">
+          <%= course.courseCode %> — <%= course.name %>
+        </a>
+      </li>
+    <% }) %>
+  </ul>
+<% }) %>
 
-            <ul>
-                <% departments[dept].forEach(course => { %>
-                    <li>
-                        <a href="/catalog/<%= course.id %>">
-                            <%= course.id %> — <%= course.title %>
-                        </a>
-                    </li>
-                <% }) %>
-            </ul>
-        </section>
-    <% } %>
 </main>
 
 <%- include('partials/footer') %>
