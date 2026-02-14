@@ -10,7 +10,7 @@ export const catalogPage = async (req, res) => {
     const courses = await getAllCourses();
     console.log('[catalogPage] Retrieved courses')
     
-    res.render('catalog', {
+    res.render('catalog/list', {
         title: 'Course Catalog',
         courses: courses
     });
@@ -43,7 +43,7 @@ export const courseDetailPage = async (req, res, next) => {
     const sections = await getSectionsByCourseSlug(courseSlug, sortBy);
     console.log(`[courseDetailPage] Retrieved ${sections.length} sections`);
 
-    res.render('coursedetail', {
+    res.render('catalog/detail', {
         title: `${course.courseCode} - ${course.name}`,
         course: course,
         sections: sections,
