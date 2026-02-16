@@ -4,6 +4,7 @@
 BEGIN;
 
 -- Drop existing tables (in reverse dependency order)
+DROP TABLE IF EXISTS contact_form CASCADE;
 DROP TABLE IF EXISTS catalog CASCADE;
 DROP TABLE IF EXISTS faculty CASCADE;
 DROP TABLE IF EXISTS courses CASCADE;
