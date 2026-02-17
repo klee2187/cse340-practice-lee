@@ -4,6 +4,7 @@ import { catalogPage, courseDetailPage, randomCoursePage, departmentsPage } from
 import { homePage, aboutPage, demoPage, testErrorPage } from './index.js';
 import { facultyListPage, facultyDetailPage } from './faculty/faculty.js';
 import contactRoutes from './forms/contact.js';
+import registrationRoutes from './forms/registration.js';
 
 
 // Create a new router instance
@@ -24,6 +25,12 @@ router.use('/faculty', (req, res, next) => {
 // Add contact-specific styles to all contact routes
 router.use('/contact', (req, res, next) => {
     res.addStyle('<link rel="stylesheet" href="/css/contact.css">');
+    next();
+});
+
+// Add registration-specific styles to all registration routes
+router.use('/register', (req, res, next) => {
+    res.addStyle('<link rel="stylesheet" href="/css/registration.css">');
     next();
 });
 
@@ -54,5 +61,8 @@ router.get('/error-sync', (req, res) => { throw new Error('Synchronous error: so
 
 // Contact form routes
 router.use('/contact', contactRoutes);
+
+// Registration routes
+router.use('/register', registrationRoutes);
 
 export default router;
