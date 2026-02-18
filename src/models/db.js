@@ -10,7 +10,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Read the CA certificate content
-const caCert = fs.readFileSync(path.join(__dirname, '../../bin', 'byuicse-psql-cert.pem'));
+let caCert = null;
+try {
+    const certPath = path.join(__dirname, '../../bin', 'byuicse-psql-cert.pem');
+    console.log("Reading CA certificate from:", certPath);
+    caCert = fs.readFileSync(path.join(__dirname, '../../bin', 'byuicse-psql-cert.pem'));
+} catch (error) {
+    console.warn("Failed to read CA certificate:", error.message);
+}
 
 /**
  * Connection pool for PostgreSQL database.
@@ -32,8 +39,10 @@ if (!process.env.DB_URL) {
 const pool = new Pool({ 
     connectionString: process.env.DB_URL, 
     ssl: useSSL 
-    ? { rejectUnauthorized: true, 
-        ca: caCert.toString(), }
+    ? { 
+        rejectUnauthorized: true, 
+        ca: caCert ? caCert.toString() : undefined
+    }
          : false 
 });
 
