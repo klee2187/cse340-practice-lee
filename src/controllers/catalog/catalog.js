@@ -41,12 +41,12 @@ export const courseDetailPage = async (req, res, next) => {
     
     // Get sections (course offerings) separately from the catalog
     const sections = await getSectionsByCourseSlug(courseSlug, sortBy);
+    course.sections = sections;
     console.log(`[courseDetailPage] Retrieved ${sections.length} sections`);
 
     res.render('catalog/detail', {
         title: `${course.courseCode} - ${course.name}`,
-        course: course,
-        sections: sections,
+        course,
         currentSort: sortBy
     });
 };

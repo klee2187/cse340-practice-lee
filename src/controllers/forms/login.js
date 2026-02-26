@@ -35,10 +35,14 @@ const processLogin = async (req, res) => {
     // Check for validation errors
     const errors = validationResult(req);
 
-    if (!errors.isEmpty()) {
-        console.log('Validation errors:', errors.array());
-        return res.redirect('/login');
-    }
+    // Inside your validation error check
+if (!errors.isEmpty()) {
+    // Store each validation error as a separate flash message
+    errors.array().forEach(error => {
+        req.flash('error', error.msg);
+    });
+    return res.redirect('/login');
+}
 
     // Extract validated data from the request body
     const { email, password } = req.body;
@@ -47,14 +51,14 @@ const processLogin = async (req, res) => {
         const user = await findUserByEmail(email);
 
         if (!user) {
-            console.log('User not found');
+            req.flash('error', 'Invalid email or password')
             return res.redirect('/login');
         }
 
         const passwordVerification = await verifyPassword(password, user.password);
 
         if (!passwordVerification) {
-            console.log('Invalid password');
+            req.flash('error', 'Invalid email or password')
             return res.redirect('/login');
         }
 
@@ -63,10 +67,12 @@ const processLogin = async (req, res) => {
         delete safeUser.password;
 
         req.session.user = safeUser;
+        req.flash('success', 'Welcome! Thanks for joining us!')
         return res.redirect('/dashboard');
 
     } catch (error) {
         console.error('Error logging in:', error);
+        req.flash('error', 'Error logging in. Please try again later.')
         return res.redirect('/login');
     }
 };
