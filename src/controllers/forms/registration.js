@@ -11,26 +11,37 @@ const router = Router();
 const registrationValidation = [
     body('name')
         .trim()
-        .isLength({ min: 2 })
-        .withMessage('Name must be at least 2 characters'),
+        .isLength({ min: 2, max: 100 })
+        .withMessage('Name must be between 2 and 100 characters')
+        .matches(/^[a-zA-Z\s'-]+$/)
+        .withMessage('Names can only contain letters, spaces, hyphens, and apostrophes'),
     body('email')
         .trim()
         .isEmail()
         .normalizeEmail()
-        .withMessage('Must be a valid email address'),
+        .withMessage('Must be a valid email address')
+        .isLength({ max: 255 })
+        .withMessage('Email is too long'),
     body('emailConfirm')
         .trim()
         .custom((value, { req }) => value === req.body.email)
         .withMessage('Email addresses must match'),
     body('password')
-        .isLength({ min: 8 })
+        .isLength({ min: 8, max: 128 })
+        .withMessage('Password must be between 8 and 128')
         .matches(/[0-9]/)
-        .withMessage('Password must contain at least one number')
+        .withMessage('Password must contain at least 1 number')
+        .matches(/[a-z]/)
+        .withMessage('Password must contain at least one lowercase letter')
         .matches(/[!@#$%^&*]/)
-        .withMessage('Password must contain at least one special character'),
+        .withMessage('Password must contain at least one special character')
+        .matches(/[A-Z]/)
+        .withMessage('Password must contain at least one uppercase letter')
+        .matches(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/)
+        .withMessage('Must contain at least one special character'),
     body('passwordConfirm')
         .custom((value, { req }) => value === req.body.password)
-        .withMessage('Passwords must match')
+        .withMessage('Passwords must match'),
 ];
 
 /**

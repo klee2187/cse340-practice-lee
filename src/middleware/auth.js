@@ -11,6 +11,7 @@ const requireLogin = (req, res, next) => {
         next();
     } else {
         // User is not authenticated - redirect to login
+        req.flash('error', 'You are not authorized to access that information without proper login credentials')
         res.redirect('/login');
     }
 };
